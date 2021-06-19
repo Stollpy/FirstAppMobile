@@ -1,38 +1,39 @@
 <template>
-  <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-title>Blank</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
-      </ion-header>
-    
-      <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-      </div>
-    </ion-content>
-  </ion-page>
+ <base-layout pageTitle="Home">
+    <ion-button router-link="/memories">All Memories</ion-button>
+      <ion-list v-if="itemList">
+          <ion-item :key="index" v-for="(item, index) in itemList"> {{ item.title }} </ion-item>
+      </ion-list>
+    <ion-spinner v-if="loading"></ion-spinner>
+ </base-layout>
 </template>
+<script>
+import { IonList, IonItem, IonSpinner, IonButton} from '@ionic/vue';
 
-<script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { defineComponent } from 'vue';
-
-export default defineComponent({
+export default({
   name: 'Home',
+  data: () => ({
+    itemList: null,
+    loading: false,
+  }),
   components: {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar
+    IonList,
+    IonItem,
+    IonSpinner,
+    IonButton
+  },
+  async mounted(){
+    this.loading = true;
+
+    try{
+
+      const test = await fetch('https://jsonplaceholder.typicode.com/posts');
+      this.itemList = await test.json();
+      this.loading = false;
+
+    }catch (e) {
+      console.log(e);
+    }
   }
 });
 </script>

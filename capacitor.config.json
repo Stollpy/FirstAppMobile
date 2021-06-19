@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "app-mobile",
-	"webDir": "dist",
-	"bundledWebRuntime": false
+  "appId": "com.stollpy.allmemory",
+  "appName": "MyMemories",
+  "webDir": "public",
+  "bundledWebRuntime": false
 }
